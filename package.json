@@ -1,0 +1,27 @@
+{
+  "name": "tsahal_exam",
+  "version": "1.0.0",
+  "description": "<li>POST /games -> creates new game</li> <li>GET /games/:id -> get specific game data</li> <li>POST /games/:id/reinforce -> make reinforce phase</li> <li>POST /games/:id/attack -> make attack phase or skip it depends on body of the POST</li> <li>POST /games/:id/move -> make move phase</li> <li>POST /games/:id/end-turn -> make end-turn phase</li>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sanzake/tsahal_exam.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Sanzake/tsahal_exam/issues"
+  },
+  "homepage": "https://github.com/Sanzake/tsahal_exam#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.112.3",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "pg": "^8.23.0"
+  }
+}
