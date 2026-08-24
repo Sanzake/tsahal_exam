@@ -70,3 +70,17 @@ export const reinforce = async(gameStatus, territoryId) => {
         }
     }
 }
+
+export const skipAttack = async(gameID) => {
+    try {
+        
+        const {data, error} = await supabase
+            .from("gameStatus")
+            .select()
+            .eq("id", gameID)
+        const gameStatus = data[0]
+        console.log(gameStatus)
+    } catch (error) {
+        console.error(error)
+    }
+}

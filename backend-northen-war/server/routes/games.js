@@ -1,5 +1,5 @@
 import express from "express";
-import {createGameStatus, getGameStatus, reinforce }from "../repository/gameStatusLogic.js"
+import {createGameStatus, getGameStatus, reinforce, skipAttack }from "../repository/gameStatusLogic.js"
 
 const router = express.Router()
 
@@ -36,7 +36,8 @@ router.post("/:id/attack", async (req, res) => {
     const id = req.params.id
     const skip = req.body.skip
     if (skip === true) {
-        console.log(111)
+        await skipAttack(id)
+        return
     }
     const fromId = req.body.fromId
     const toId = req.body.toId
