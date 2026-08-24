@@ -20,3 +20,5 @@ At all we need 2 tables.
 ## Run
 npm -y
 npm install express pg dotenv @supabase/supabase-js
+
+node ./backend-northen-war/src/server.js
