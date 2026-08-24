@@ -1,4 +1,4 @@
-import { insertStartGameStatus, selectGameStatus, reinforceGameStatus, skipAttack, makeAttack, makeMove, comuterTurn } from "../repository/repository.js"
+import { insertStartGameStatus, selectGameStatus, reinforceGameStatus, skipAttack, makeAttack, makeMove, computerTurn } from "../repository/repository.js"
 
 
 export const createStartGameStatus = async (req, res) => {
@@ -66,7 +66,7 @@ export const move = async (req, res) => {
 export const endTurn = async (req, res) => {
     try {
         const gameId = req.params.id
-        const gameStatus = await comuterTurn(gameId)
+        const gameStatus = await computerTurn(gameId)
         res.status(200).json(gameStatus)
     } catch(error) {
         console.error(error)
