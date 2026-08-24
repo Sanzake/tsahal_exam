@@ -223,7 +223,7 @@ export const computerTurn = async (gameId) => {
     const territories = gameStatus.territories
 
     gameStatus.territories = computerReinforce(territories)
-    console.log(gameStatus.territories)
+    // continue...
 
 }
 
@@ -248,6 +248,7 @@ export const makeMove = async (gameId, fromId, toId, soldiers) => {
                     .eq("id", gameStatus.id)
                     .select()
                 
+                // here computer make turn but its logic not finished
                 const response = await computerTurn(gameId)
                 response.playerEvent = playerEvent
                 return response

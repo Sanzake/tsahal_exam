@@ -1,38 +1,34 @@
 const REINFORCE_AMOUNT = 3
 
-const findCloserToComputerHqPlayerTerritory = (playerTerritories) => {
-    let closerToComputerHqPlayerTerritories = [playerTerritories[0]]
-    let rangeFromComputerHQ = closerToComputerHqPlayerTerritories.distanceFromComputerHQ
+const findCloserToComputerHqTerritory = (territories) => {
+    let closerToComputerHqTerritories = [territories[0]]
+    let rangeFromComputerHQ = closerToComputerHqTerritories.distanceFromComputerHQ
 
-    for (const t of playerTerritories.slice(1)) {
+    for (const t of territories.slice(1)) {
 
         if (t.distanceFromComputerHQ === rangeFromComputerHQ) {
-            closerToComputerHqPlayerTerritories.push(t)
+            closerToComputerHqTerritories.push(t)
         } else if (t.distanceFromComputerHQ < rangeFromComputerHQ) {
-            closerToComputerHqPlayerTerritories = [t]
+            closerToComputerHqTerritories = [t]
             rangeFromComputerHQ = t.distanceFromComputerHQ
         }
     }
-    return closerToComputerHqPlayerTerritories
+    return closerToComputerHqTerritories
 }
 
-const findCloserToPlayerHqComputerTerritory = (computerTerritories) => {
-    let closerToPlayerHqComputerTerritories = [computerTerritories[0]]
-    let rangeFromPlayerHQ = closerToPlayerHqComputerTerritories[0].distanceFromPlayerHQ
-    console.log(closerToPlayerHqComputerTerritories[0].distanceFromPlayerHQ)
-    console.log(rangeFromPlayerHQ)
+const findCloserToPlayerHqTerritory = (territories) => {
+    let closerToPlayerHqTerritories = [territories[0]]
+    let rangeFromPlayerHQ = closerToPlayerHqTerritories[0].distanceFromPlayerHQ
 
-    for (const t of computerTerritories.slice(1)) {
-        console.log(t.distanceFromPlayerHQ, rangeFromPlayerHQ)
-
+    for (const t of territories.slice(1)) {
         if (t.distanceFromPlayerHQ === rangeFromPlayerHQ) {
-            closerToPlayerHqComputerTerritories.push(t)
+            closerToPlayerHqTerritories.push(t)
         } else if (t.distanceFromPlayerHQ < rangeFromPlayerHQ) {
-            closerToPlayerHqComputerTerritories = [t]
+            closerToPlayerHqTerritories = [t]
             rangeFromPlayerHQ = t.distanceFromPlayerHQ
         }
     }
-    return closerToPlayerHqComputerTerritories
+    return closerToPlayerHqTerritories
 }
 
 const findTerritoryWithMinSoldiersValue = (territories) => {
@@ -72,19 +68,20 @@ const findMinIdTerritory = (territories) => {
             territoryWithMinId = t
         }
     }
+    return territoryWithMinId
 }
 
 
-const chooseTerritoryToReinforce = (closerToComputerHqPlayerTerritories, closerToPlayerHqComputerTerritories) =>{
+const chooseTerritoryToReinforce = (closerToComputerHqPlayerTerritories, closerToPlayerHqComputerTerritories, closerToComputerHqComputerTerritories) =>{
     const rangeFromComputerHQ = closerToComputerHqPlayerTerritories[0].distanceFromComputerHQ
-    const territoriesWithMinSoldiersValue = findTerritoryWithMinSoldiersValue(closerToComputerHqPlayerTerritories)
+    const territoriesWithMinSoldiersValue = findTerritoryWithMinSoldiersValue(closerToComputerHqComputerTerritories)
 
     let territoryToReinforce;
 
     if (rangeFromComputerHQ <= 2) {
         console.log("defence")
-        if (closerToComputerHqPlayerTerritories.length === 1) {
-            territoryToReinforce = closerToComputerHqPlayerTerritories[0]
+        if (closerToComputerHqComputerTerritories.length === 1) {
+            territoryToReinforce = closerToComputerHqComputerTerritories[0]
         } else if (territoriesWithMinSoldiersValue.length === 1) {
             territoryToReinforce = territoriesWithMinSoldiersValue[0]
         } else {
@@ -94,18 +91,14 @@ const chooseTerritoryToReinforce = (closerToComputerHqPlayerTerritories, closerT
         console.log("attack")
         const territoriesWithMaxSoldiersValue = findTerritoryWithMaxSoldiersValue(closerToPlayerHqComputerTerritories)
         if (closerToPlayerHqComputerTerritories.length === 1) {
-            console.log(1)
             territoryToReinforce = closerToPlayerHqComputerTerritories[0]
         } else if (territoriesWithMaxSoldiersValue.length === 1) {
-            console.log(2)
             territoryToReinforce = territoriesWithMaxSoldiersValue[0]
         } else {
-            console.log(3)
             territoryToReinforce = findMinIdTerritory(territoriesWithMaxSoldiersValue)
         }
         
     }
-    console.log(territoryToReinforce)
 
     return territoryToReinforce
 }
@@ -124,10 +117,11 @@ export const computerReinforce = (territories) => {
         }
     }
 
-    const closerToComputerHqPlayerTerritories = findCloserToComputerHqPlayerTerritory(playerTerritories)
-    const closerToPlayerHqComputerTerritories = findCloserToPlayerHqComputerTerritory(computerTerritories)
+    const closerToComputerHqPlayerTerritories = findCloserToComputerHqTerritory(playerTerritories)
+    const closerToPlayerHqComputerTerritories = findCloserToPlayerHqTerritory(computerTerritories)
+    const closerToComputerHqComputerTerritories = findCloserToComputerHqTerritory(computerTerritories)
     
-    const territoryToReinforce = chooseTerritoryToReinforce(closerToComputerHqPlayerTerritories, closerToPlayerHqComputerTerritories)
+    const territoryToReinforce = chooseTerritoryToReinforce(closerToComputerHqPlayerTerritories, closerToPlayerHqComputerTerritories, closerToComputerHqComputerTerritories)
     territoryToReinforce.soldiers += REINFORCE_AMOUNT
     return territories
 }
