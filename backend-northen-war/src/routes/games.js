@@ -1,24 +1,14 @@
 import express from "express";
-import {createGameStatus, getGameStatus, reinforce, skipAttack }from "../repository/gameStatusLogic.js"
+import {skipAttack }from "../repository/repository.js"
+import { createStartGameStatus, getGameStatus, reinforce } from "../controllers/controllers.js";
 
 const router = express.Router()
 
+router.post("/", createStartGameStatus)
 
-router.post("/", async (req, res) => {
-    const playerName = req.body.playerName
+router.get("/:id", getGameStatus)
 
-    const data = await createGameStatus(playerName)
-    console.log(data)
-    res.status(201).json(data[0])
-})
-
-router.get("/:id", async (req, res) => {
-    const id = req.params.id
-
-    const gameStatus = await getGameStatus(id)
-    res.status(200).json(gameStatus)
-})
-
+/*
 router.post("/:id/reinforce", async (req, res) => {
     const id = req.params.id
     const territoryId = req.body.territoryId
@@ -31,6 +21,9 @@ router.post("/:id/reinforce", async (req, res) => {
 
     }
 })
+*/
+
+router.post("/:id/reinforce", reinforce)
 
 router.post("/:id/attack", async (req, res) => {
     const id = req.params.id
