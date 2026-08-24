@@ -1,9 +1,8 @@
 import "dotenv/config"
 import { readFile } from 'node:fs/promises'
 import { resolve } from "node:path"
-
 import {createClient} from "@supabase/supabase-js"
-import { platform } from "node:os"
+import { computerReinforce } from "../AI/reinforce.js"
 
 
 const supabase_url = process.env.SUPABASE_STRING
@@ -219,7 +218,12 @@ export const makeAttack = async (gameId, fromId, toId, soldiers) => {
 
 }
 
-export const computerTurn = async () => {
+export const computerTurn = async (gameId) => {
+    const gameStatus = await selectGameStatus(gameId)
+    const territories = gameStatus.territories
+
+    gameStatus.territories = computerReinforce(territories)
+    console.log(gameStatus.territories)
 
 }
 
