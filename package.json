@@ -4,6 +4,7 @@
   "description": "<li>POST /games -> creates new game</li> <li>GET /games/:id -> get specific game data</li> <li>POST /games/:id/reinforce -> make reinforce phase</li> <li>POST /games/:id/attack -> make attack phase or skip it depends on body of the POST</li> <li>POST /games/:id/move -> make move phase</li> <li>POST /games/:id/end-turn -> make end-turn phase</li>",
   "main": "index.js",
   "scripts": {
+    "start": "node ./backend-northen-war/src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

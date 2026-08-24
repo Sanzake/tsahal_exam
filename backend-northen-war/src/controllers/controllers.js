@@ -1,4 +1,4 @@
-import { insertStartGameStatus, selectGameStatus, reinforceGameStatus } from "../repository/repository.js"
+import { insertStartGameStatus, selectGameStatus, reinforceGameStatus, skipAttack } from "../repository/repository.js"
 
 
 export const createStartGameStatus = async (req, res) => {
@@ -26,9 +26,27 @@ export const reinforce = async (req, res) => {
         const id = req.params.id
         const territoryId = req.body.territoryId
         const reinforcedGameStatus = await reinforceGameStatus(id, territoryId)
-        
+
         res.status(200).json(reinforcedGameStatus)
     } catch(error) {
         console.error(error)
+    }
+}
+
+export const attack = async (req, res) => {
+    try {
+        const id = req.params.id
+        const skip = req.body.skip
+
+        if (skip === true) {
+            const gameStatus = await skipAttack(id)
+            res.status(200).json(gameStatus)
+            return
+        }
+        const {fromId, toId, soldiers} = req.body
+
+        res.status(200).json()
+    } catch(error) {
+
     }
 }

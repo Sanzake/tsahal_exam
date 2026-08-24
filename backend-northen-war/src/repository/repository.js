@@ -118,9 +118,6 @@ export const selectGameStatus = async(gameId) => {
 
 export const reinforceGameStatus = async(gameId, territoryId) => {
     const gameStatus = await selectGameStatus(gameId)
-    console.log(gameId, territoryId)
-    console.log(gameStatus.status, gameStatus.phase)
-
 
     if (gameStatus.status === "playing" && gameStatus.phase === "reinforce") {
         console.log(1)
@@ -137,8 +134,6 @@ export const reinforceGameStatus = async(gameId, territoryId) => {
                     .update(gameStatus)
                     .eq("id", gameStatus.id)
                     .select()
-                console.log(data[0])
-                console.log(gameStatus)
                 return data[0]
             }
         }
@@ -149,10 +144,10 @@ export const skipAttack = async(gameID) => {
     try {
         const {data, error} = await supabase
             .from("gameStatus")
-            .select()
+            .update({phase: "move"})
             .eq("id", gameID)
-        const gameStatus = data[0]
-        console.log(gameStatus)
+            .select()
+        return data[0]
     } catch (error) {
         console.error(error)
     }
